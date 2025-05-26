@@ -1,7 +1,11 @@
 
-# Environments
-.env
+# Data
+*.duckdb
 
-# Folders
-secrets/
+# Notebooks
+command_line.ipynb
 
+# Secrets
+/secrets/
+*.env
+/.dlt/
