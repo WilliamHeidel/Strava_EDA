@@ -7,6 +7,7 @@ import dlt
 from dlt.sources.helpers.rest_client import RESTClient
 from dlt.sources.helpers.rest_client.auth import BearerTokenAuth
 from dlt.sources.helpers.rest_client.paginators import OffsetPaginator
+from dlt.sources.filesystem import filesystem
 from dotenv import load_dotenv
 
 # === CONFIGURATION ===
@@ -123,8 +124,23 @@ def strava_source(
 
     return athlete
 
-pipeline = dlt.pipeline(
-    pipeline_name="strava_rest_api",
-    destination="redshift",
+
+pipeline_s3 = dlt.pipeline(
+    pipeline_name="strava_to_s3",       # you can keep the same name if you like
+    destination="filesystem",            # ← switch to filesystem
+    dataset_name="strava_activities_s3"  # name for the S3 “folder” in your bucket
 )
-load_info = pipeline.run(strava_source())
+load_info_s3 = pipeline_s3.run(strava_source(), loader_file_format = "csv")
+
+
+pipeline_redshift = dlt.pipeline(
+    pipeline_name="strava_s3_to_redshift",
+    destination="redshift",
+    dataset_name="strava_rest_api_dataset"
+)
+
+source_from_s3 = filesystem(
+    bucket_url="s3://billy-heidel-test-bucket/strava_activities_s3",
+    file_glob="**/*.csv"
+)
+load_info_redshift = pipeline_redshift.run(source_from_s3)
