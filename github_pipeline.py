@@ -14,6 +14,18 @@ load_dotenv()
 CLIENT_ID = os.getenv(f'CLIENT_ID')
 CLIENT_SECRET = os.getenv(f'CLIENT_SECRET')
 
+SECRETS_FILE = os.getenv(f'STRAVA_TOKENS_JSON')
+
+# Create directory if it doesn't exist
+os.makedirs('secrets', exist_ok=True)
+
+# Load the JSON string into a Python object
+data = json.loads(SECRETS_FILE)
+
+# Write the JSON data to the file
+with open('secrets/strava_tokens.json', 'w') as file:
+    json.dump(data, file, indent=4)
+
 TOKENS_FILE = 'secrets/strava_tokens.json'
 
 # === LOAD OR REFRESH TOKENS ===
