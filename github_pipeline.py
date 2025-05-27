@@ -16,6 +16,7 @@ CLIENT_ID = os.getenv(f'CLIENT_ID')
 CLIENT_SECRET = os.getenv(f'CLIENT_SECRET')
 
 SECRETS_FILE = os.getenv(f'STRAVA_TOKENS_JSON')
+BUCKET_URL = os.getenv('BUCKET_URL')
 
 # Create directory if it doesn't exist
 os.makedirs('secrets', exist_ok=True)
@@ -140,7 +141,7 @@ pipeline_redshift = dlt.pipeline(
 )
 
 source_from_s3 = filesystem(
-    bucket_url="s3://billy-heidel-test-bucket/strava_activities_s3",
+    bucket_url=BUCKET_URL,
     file_glob="**/*.csv"
 )
 load_info_redshift = pipeline_redshift.run(source_from_s3)
