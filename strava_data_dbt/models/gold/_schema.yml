@@ -1,0 +1,12 @@
+
+version: 2
+
+models:
+  - name: gold_strava_activities
+    description: "The gold model for strava activities."
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null

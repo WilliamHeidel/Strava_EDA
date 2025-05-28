@@ -1,0 +1,20 @@
+
+
+version: 2
+
+sources:
+  - name: strava_rest_api_dataset
+    schema: strava_rest_api_dataset
+    tables:
+    - name: activities
+      description: "Raw Activities Data from the Strava API."
+      columns:
+        - name: id
+          description: "The primary key for this table"
+          tests:
+            - unique
+            - not_null
+    - name: activities__start_latlng
+      description: "Starting Latitude and Longitude values from Raw Activities Data from the Strava API."
+    - name: activities__end_latlng
+      description: "Ending Latitude and Longitude values from Raw Activities Data from the Strava API."

@@ -9,3 +9,8 @@ command_line.ipynb
 /secrets/
 *.env
 /.dlt/
+
+# dbt
+target/
+dbt_packages/
+logs/

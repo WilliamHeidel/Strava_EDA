@@ -1,0 +1,30 @@
+
+version: 2
+
+models:
+  - name: silver_strava_activities
+    description: "The silver model for strava activities."
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: silver_strava_activities_start_latlng
+    description: "The silver model for strava activities start latlongs."
+    columns:
+      - name: _dlt_parent_id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: silver_strava_activities_end_latlng
+    description: "The silver model for strava activities start latlongs."
+    columns:
+      - name: _dlt_parent_id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null

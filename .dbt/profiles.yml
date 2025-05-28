@@ -1,0 +1,29 @@
+
+redshift:
+  target: test
+  outputs:
+    test:
+      type: redshift
+      host: redshift-cluster-test.cnfb7cenlrg6.us-east-2.redshift.amazonaws.com
+      port: 5439
+      user: "{{ env_var('REDSHIFT_USER') }}"
+      pass: "{{ env_var('REDSHIFT_PASS') }}"
+      dbname: dev
+      schema: dbt_test
+      threads: 4
+      keepalives: true
+      #search_path: your_schema
+      sslmode: prefer
+
+    prod:
+      type: redshift
+      host: redshift-cluster-test.cnfb7cenlrg6.us-east-2.redshift.amazonaws.com
+      port: 5439
+      user: "{{ env_var('REDSHIFT_USER') }}"
+      pass: "{{ env_var('REDSHIFT_PASS') }}"
+      dbname: dev
+      schema: prod
+      threads: 4
+      keepalives: true
+      #search_path: your_schema
+      sslmode: prefer

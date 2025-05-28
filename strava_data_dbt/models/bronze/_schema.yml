@@ -1,0 +1,18 @@
+
+version: 2
+
+models:
+  - name: bronze_strava_activities
+    description: "The bronze model for strava activities."
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: bronze_strava_activities_start_latlng
+    description: "The bronze model for strava activities start latlongs."
+
+  - name: bronze_strava_activities_end_latlng
+    description: "The bronze model for strava activities start latlongs."
