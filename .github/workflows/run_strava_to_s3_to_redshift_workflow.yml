@@ -1,7 +1,11 @@
 name: Run strava_rest_api pipeline from github_pipeline.py
 'on':
   schedule:
-  - cron: '0 0,12 * * *'
+  - cron: "30 14 * * *"  # 10:30 AM ET (14:30 UTC)
+  - cron: "30 2 * * *"   # 10:30 PM ET (02:30 UTC)
+  push:
+    branches:
+      - main
   workflow_dispatch: null
 env:
   DESTINATION__REDSHIFT__CREDENTIALS__DATABASE: dev

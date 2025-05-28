@@ -2,12 +2,14 @@
 name: Run dbt on Push
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Run strava_rest_api pipeline from github_pipeline.py"]
+    types:
+      - completed
 
 jobs:
-  run-dbt:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
