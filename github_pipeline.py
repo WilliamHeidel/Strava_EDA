@@ -123,7 +123,7 @@ def strava_source(
         for page in client.paginate("athlete"):
             yield page
 
-    return athlete
+    return activities
 
 
 pipeline_s3 = dlt.pipeline(
