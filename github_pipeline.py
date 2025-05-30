@@ -17,6 +17,7 @@ CLIENT_SECRET = os.getenv(f'CLIENT_SECRET')
 
 SECRETS_FILE = os.getenv(f'STRAVA_TOKENS_JSON')
 BUCKET_URL = os.getenv('BUCKET_URL')
+os.environ["NORMALIZE__DATA_WRITER__DISABLE_COMPRESSION"] = "true"
 
 # Create directory if it doesn't exist
 os.makedirs('secrets', exist_ok=True)
@@ -114,34 +115,11 @@ def strava_source(
 
     return activities
 
-
-    @dlt.resource(
-        write_disposition="replace",
-        #primary_key="id",
-    )
-    def athlete():
-        for page in client.paginate("athlete"):
-            yield page
-
-    return activities
-
-
-pipeline_s3 = dlt.pipeline(
-    pipeline_name="strava_to_s3",       # you can keep the same name if you like
-    destination="filesystem",            # ← switch to filesystem
-    dataset_name="strava_activities_s3"  # name for the S3 “folder” in your bucket
-)
-load_info_s3 = pipeline_s3.run(strava_source(), loader_file_format = "csv")
-
-
-pipeline_redshift = dlt.pipeline(
-    pipeline_name="strava_s3_to_redshift",
-    destination="redshift",
-    dataset_name="strava_rest_api_dataset"
+pipeline = dlt.pipeline(
+    pipeline_name="strava",       # you can keep the same name if you like
+    staging='filesystem',
+    destination="redshift",            # ← switch to filesystem
+    dataset_name="strava_rest_api_dataset"  # name for the S3 “folder” in your bucket
 )
 
-source_from_s3 = filesystem(
-    bucket_url=BUCKET_URL,
-    file_glob="**/*.csv"
-)
-load_info_redshift = pipeline_redshift.run(source_from_s3)
+load_info = pipeline.run(strava_source(), loader_file_format = "jsonl")
