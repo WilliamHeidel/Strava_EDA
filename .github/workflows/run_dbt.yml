@@ -39,4 +39,5 @@ jobs:
           dbt debug
           dbt deps
           dbt build
+          dbt build --target prod
         working-directory: ${{ github.workspace }}/strava_data_dbt
