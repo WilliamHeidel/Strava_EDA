@@ -2,6 +2,7 @@
 name: Run dbt on Push
 
 on:
+  workflow_dispatch: null
   workflow_run:
     workflows: ["Run strava_rest_api pipeline from github_pipeline.py"]
     types:
